@@ -55,7 +55,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     redirect('/login');
   }
 
-  console.log(userId)
   //const user = users.find((u) => u.id === userId);
 
   const user = async () => {
@@ -68,13 +67,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     body: JSON.stringify(userId),
   });
   const user = await res.json();
-  console.log(user);
     } catch (error) {
   console.error("Error al enviar usuario:", error);
     }
   }
 
-  console.log(user)
 
 
   if (!user) {

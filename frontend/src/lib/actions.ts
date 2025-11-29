@@ -29,8 +29,6 @@ export async function login(prevState: any, formData: FormData) {
     console.error("Error al iniciar sesión:", error);
   }
 
-  console.log("USUARIO DESDE BACK:", user);
-
   if (user?.id) {
     const cookieStore = cookies();
 
@@ -84,8 +82,6 @@ export async function registerUser(prevState: any, formData: FormData) {
     password,
     avatar: "/avatars/03.png",
   };
-  console.log(newUser);
-  console.log(JSON.stringify(newUser));
 
 
 try {

@@ -11,7 +11,6 @@ const validatePassword = (req, res, next) => {
         message: "contraseña invalida"
     })
   } catch (error) {
-    console.log(error);
     next(error)
   }
 };

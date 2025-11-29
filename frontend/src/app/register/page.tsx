@@ -33,7 +33,6 @@ function SubmitButton() {
 function RegisterForm() {
   const [state, formAction] = useActionState(registerUser, initialState);
   const { toast } = useToast();
-  console.log(formAction)
 
   useEffect(() => {
     if (state?.message) {
