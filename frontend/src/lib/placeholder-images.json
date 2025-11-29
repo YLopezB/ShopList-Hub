@@ -1,0 +1,112 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero",
+      "description": "A person looking at a shopping list on their phone in a modern grocery store.",
+      "imageUrl": "https://images.unsplash.com/photo-1623265300459-dfc7609a0a55?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzaG9wcGluZyUyMGxpc3R8ZW58MHx8fHwxNzY0MjQ1MDc5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "shopping list"
+    },
+    {
+      "id": "feature-1",
+      "description": "A tablet showing the ShopList Hub interface on a kitchen counter.",
+      "imageUrl": "https://images.unsplash.com/photo-1654764451078-de55e650649e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YXBwJTIwaW50ZXJmYWNlfGVufDB8fHx8MTc2NDIwMTI0NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "app interface"
+    },
+    {
+      "id": "store-1",
+      "description": "The exterior of a modern grocery store.",
+      "imageUrl": "https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxncm9jZXJ5JTIwc3RvcmV8ZW58MHx8fHwxNzY0MjQ2NzkxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "grocery store"
+    },
+    {
+      "id": "store-2",
+      "description": "The exterior of a local organic market.",
+      "imageUrl": "https://images.unsplash.com/photo-1612776573170-6e72ebca79d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxvcmdhbmljJTIwbWFya2V0fGVufDB8fHx8MTc2NDI5ODM2Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "organic market"
+    },
+    {
+      "id": "store-3",
+      "description": "The exterior of a large supermarket.",
+      "imageUrl": "https://images.unsplash.com/photo-1601598851547-4302969d0614?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzdXBlcm1hcmtldHxlbnwwfHx8fDE3NjQyOTgzNjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "supermarket"
+    },
+    {
+      "id": "store-4",
+      "description": "The exterior of a specialty food shop.",
+      "imageUrl": "https://images.unsplash.com/photo-1630886968873-2ba25ca98337?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzcGVjaWFsdHklMjBzaG9wfGVufDB8fHx8MTc2NDI5ODM2Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "specialty shop"
+    },
+    {
+      "id": "product-apples",
+      "description": "A close-up of fresh red apples.",
+      "imageUrl": "https://images.unsplash.com/photo-1684499402868-671f4e8ac6ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxyZWQlMjBhcHBsZXN8ZW58MHx8fHwxNzY0MjIwNDg5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "red apples"
+    },
+    {
+      "id": "product-bread",
+      "description": "A loaf of freshly baked bread.",
+      "imageUrl": "https://images.unsplash.com/photo-1643369176535-139e9722209c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhcnRpc2FuJTIwYnJlYWR8ZW58MHx8fHwxNzY0MjI0NjgwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "artisan bread"
+    },
+    {
+      "id": "product-milk",
+      "description": "A carton of milk.",
+      "imageUrl": "https://images.unsplash.com/photo-1685531309627-f0c9e8656ff9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtaWxrJTIwY2FydG9ufGVufDB8fHx8MTc2NDI2NTM5NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "milk carton"
+    },
+    {
+      "id": "product-eggs",
+      "description": "A carton of brown eggs.",
+      "imageUrl": "https://images.unsplash.com/photo-1664339307400-9c22e5f44496?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxicm93biUyMGVnZ3N8ZW58MHx8fHwxNzY0Mjk4MzYyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "brown eggs"
+    },
+    {
+      "id": "product-cheese",
+      "description": "A block of cheddar cheese.",
+      "imageUrl": "https://images.unsplash.com/photo-1741522226997-a34b5a45c648?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjaGVkZGFyJTIwY2hlZXNlfGVufDB8fHx8MTc2NDIyMDQ4OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cheddar cheese"
+    },
+    {
+      "id": "product-chicken",
+      "description": "Raw chicken breasts.",
+      "imageUrl": "https://images.unsplash.com/photo-1676471759564-8426f19510c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjaGlja2VuJTIwYnJlYXN0fGVufDB8fHx8MTc2NDI5ODIwN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "chicken breast"
+    },
+    {
+      "id": "product-lettuce",
+      "description": "A head of fresh lettuce.",
+      "imageUrl": "https://images.unsplash.com/photo-1645713595882-b6133d586fd0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxmcmVzaCUyMGxldHR1Y2V8ZW58MHx8fHwxNzY0MjMyNjkwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "fresh lettuce"
+    },
+    {
+      "id": "product-tomatoes",
+      "description": "Vine-ripened tomatoes.",
+      "imageUrl": "https://images.unsplash.com/photo-1623375477547-c73c4f274922?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxyaXBlJTIwdG9tYXRvZXN8ZW58MHx8fHwxNzY0Mjk4MzYyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ripe tomatoes"
+    },
+    {
+      "id": "store-header-1",
+      "description": "A beautiful shot of the inside of a grocery store, showing fresh produce.",
+      "imageUrl": "https://images.unsplash.com/photo-1588964895597-cfccd6e2dbf9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxncm9jZXJ5JTIwcHJvZHVjZXxlbnwwfHx8fDE3NjQyOTgzNjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "grocery produce"
+    },
+    {
+      "id": "store-header-2",
+      "description": "A wide shot of the aisles in an organic market.",
+      "imageUrl": "https://images.unsplash.com/photo-1752834368638-b4148839ef9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtYXJrZXQlMjBhaXNsZXN8ZW58MHx8fHwxNzY0Mjk4MzYyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "market aisles"
+    },
+    {
+      "id": "store-header-3",
+      "description": "A shot of the checkout counters in a large supermarket.",
+      "imageUrl": "https://images.unsplash.com/photo-1710750483431-d8eb4312d971?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxzdXBlcm1hcmtldCUyMGNoZWNrb3V0fGVufDB8fHx8MTc2NDI5ODM2Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "supermarket checkout"
+    },
+    {
+      "id": "store-header-4",
+      "description": "A close-up of artisanal products on a shelf in a specialty shop.",
+      "imageUrl": "https://images.unsplash.com/photo-1759054716603-c1f5f72511ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhcnRpc2FuYWwlMjBwcm9kdWN0c3xlbnwwfHx8fDE3NjQyOTgzNjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "artisanal products"
+    }
+  ]
+}
