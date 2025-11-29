@@ -9,50 +9,50 @@ import { users, stores, products } from "./data";
 export async function login(prevState: any, formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
-  const role = formData.get("role") as UserRole;
+  const role = formData.get("role") as string;
 
   await new Promise((resolve) => setTimeout(resolve, 500));
 
-  console.log(password);
-  console.log(email)
-  console.log(role);
-  console.log(JSON.stringify({password, email, role}))
-  
-  //const user = users.find((u) => u.email === email && u.role === role);
-    const user = async () => {
-    try {
-      const res = await fetch("http://localhost:8080/api/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({password, email, role}),
-  });
-  const user = await res.json();
-  console.log(user);
-    } catch (error) {
-  console.error("Error al iniciar sesión", error);
-    }
+  let user = null;
+
+  try {
+    const res = await fetch("http://localhost:8080/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password, role }),
+    });
+
+    user = await res.json();
+  } catch (error) {
+    console.error("Error al iniciar sesión:", error);
   }
 
-  if (user) {
-    cookies().set("user_id", user.id, {
+  console.log("USUARIO DESDE BACK:", user);
+
+  if (user?.id) {
+    const cookieStore = cookies();
+
+    cookieStore.set("user_id", user.id, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      maxAge: 60 * 60 * 24 * 7, // One week
+      maxAge: 60 * 60 * 24 * 7,
       path: "/",
     });
-    cookies().set("user_role", user.role, {
+
+    cookieStore.set("user_role", user.role, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      maxAge: 60 * 60 * 24 * 7, // One week
+      maxAge: 60 * 60 * 24 * 7,
       path: "/",
     });
+
     return { success: true, role: user.role };
   }
 
   return {
-    message: "Credenciales inválidas. Por favor, inténtalo de nuevo.",
+    message: "Credenciales inválidas.",
     success: false,
   };
 }
