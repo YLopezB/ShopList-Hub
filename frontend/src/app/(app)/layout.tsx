@@ -55,7 +55,27 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     redirect('/login');
   }
 
-  const user = users.find((u) => u.id === userId);
+  console.log(userId)
+  //const user = users.find((u) => u.id === userId);
+
+  const user = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/api/user/validate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(userId),
+  });
+  const user = await res.json();
+  console.log(user);
+    } catch (error) {
+  console.error("Error al enviar usuario:", error);
+    }
+  }
+
+  console.log(user)
+
 
   if (!user) {
     // This case might happen if the cookie is stale

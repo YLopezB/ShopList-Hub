@@ -58,30 +58,43 @@ export async function registerUser(prevState: any, formData: FormData) {
   }
 
   const newUser = {
-    id: `user-${Date.now()}`,
     name,
     email,
     role,
+    password,
     avatar: "/avatars/03.png",
   };
-  
-  // In a real app, you would save the user to the database here.
-  // For now, we just log it.
-  console.log("New user registered (simulated):", newUser);
-  users.push(newUser); // Note: This only persists for the server's lifetime.
+  console.log(newUser);
+  console.log(JSON.stringify(newUser));
 
-  cookies().set("user_id", newUser.id, {
+
+try {
+  const response = await fetch("http://localhost:8080/api/user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newUser),
+  });
+  const data = await response.json();
+
+  cookies().set("user_id", data.id, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     maxAge: 60 * 60 * 24 * 7,
     path: "/",
   });
-  cookies().set("user_role", newUser.role, {
+    cookies().set("user_role", newUser.role, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     maxAge: 60 * 60 * 24 * 7,
     path: "/",
   });
+  
+  console.log("Respuesta del servidor:", data);
+} catch (error) {
+  console.error("Error al enviar usuario:", error);
+}
 
   if (role === 'customer') {
     redirect("/dashboard");
