@@ -12,10 +12,30 @@ export async function login(prevState: any, formData: FormData) {
   const role = formData.get("role") as UserRole;
 
   await new Promise((resolve) => setTimeout(resolve, 500));
-  
-  const user = users.find((u) => u.email === email && u.role === role);
 
-  if (user && password === 'password') {
+  console.log(password);
+  console.log(email)
+  console.log(role);
+  console.log(JSON.stringify({password, email, role}))
+  
+  //const user = users.find((u) => u.email === email && u.role === role);
+    const user = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/api/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({password, email, role}),
+  });
+  const user = await res.json();
+  console.log(user);
+    } catch (error) {
+  console.error("Error al iniciar sesión", error);
+    }
+  }
+
+  if (user) {
     cookies().set("user_id", user.id, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
