@@ -25,7 +25,7 @@ Estructura base del proyecto para seguir desarrollando
 🧰 Tecnologías Utilizadas
 Frontend
 
-React
+Next
 
 TypeScript
 
