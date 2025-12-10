@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-let colleccion = "users"
+let collection = "users"
 let schema = Schema({
     name: {type: String, require: true},
     email: {type: String, require: true},
@@ -10,6 +10,6 @@ let schema = Schema({
     timestamps: true
 })
 
-let User = model(colleccion, schema)
+let User = model(collection, schema)
 
 export default User
