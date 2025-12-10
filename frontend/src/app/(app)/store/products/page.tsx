@@ -66,11 +66,11 @@ export default function ProductsPage() {
   
   const handleDeleteConfirm = async () => {
     if (!selectedProduct) return;
-    await deleteProductAction(selectedProduct.id);
+    let response = await deleteProductAction(selectedProduct.id);
     setProducts(products.filter((p) => p.id !== selectedProduct.id));
     toast({
-        title: "Producto Eliminado",
-        description: `"${selectedProduct.name}" ha sido eliminado exitosamente.`,
+        title:  String(response.title),
+        description: `"${selectedProduct.name}" ${response.message}`,
     })
     setIsDeleteDialogOpen(false);
     setSelectedProduct(null);

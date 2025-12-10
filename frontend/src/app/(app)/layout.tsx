@@ -11,7 +11,6 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar";
 import { UserNav } from "@/components/shared/user-nav";
-import { users } from "@/lib/data";
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { ShoppingCart, LayoutDashboard, Store, List, Package } from "lucide-react";

@@ -133,7 +133,6 @@ export async function addProductAction(prevState: any, formData: FormData) {
   }
   
   const newProduct = {
-      id: `prod-${Date.now()}`,
       storeId,
       name,
       description,
@@ -183,6 +182,17 @@ export async function updateProductAction(productId: string, prevState: any, for
 }
 
 export async function deleteProductAction(productId: string) {
+  try {
+    const response = await fetch("http://localhost:8080/api/product", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      }
+  })
+      return response
+    } catch (error) {
+      console.log(error)
+    }
     console.log(`Product ${productId} deleted (simulated).`);
     const index = products.findIndex(p => p.id === productId);
     if (index !== -1) {
@@ -195,12 +205,13 @@ export async function addStoreAction(prevState: any, formData: FormData) {
   const name = formData.get("name") as string;
   const category = formData.get("category") as string;
   const location = formData.get("location") as string;
+  const userId = cookies().get("user_id")?.value
 
   if (!name || !category || !location) {
     return { message: "Todos los campos son obligatorios.", error: true, timestamp: Date.now() };
   }
   
-  const newStoreData = { name, category, location };
+  const newStoreData = { name, category, location, userId };
 
   console.log("New store added (simulated):", newStoreData);
   // In a real app, you'd save this to a DB and get a full store object back
