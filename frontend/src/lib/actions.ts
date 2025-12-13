@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import type { UserRole } from "./types";
 import { users, stores, products } from "./data";
-const URI = "shop-psi-amber-57.vercel.app"
+
 
 export async function login(prevState: any, formData: FormData) {
   const email = formData.get("email") as string;
@@ -15,7 +15,8 @@ export async function login(prevState: any, formData: FormData) {
   let user = null;
 
   try {
-    const res = await fetch(`${URI}/api/login`, {
+    const res = await fetch(`
+https://shop-psi-amber-57.vercel.app/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -84,7 +85,8 @@ export async function registerUser(prevState: any, formData: FormData) {
 
 
 try {
-  const response = await fetch(`${URI}/api/user`, {
+  const response = await fetch(`
+https://shop-psi-amber-57.vercel.app/api/user`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -143,7 +145,8 @@ export async function addProductAction(prevState: any, formData: FormData) {
   }
 
   try {
-    let res = await fetch(`${URI}/api/product`, {
+    let res = await fetch(`
+https://shop-psi-amber-57.vercel.app/api/product`, {
       method: "POST",
       headers: {
       "Content-Type": "application/json",
@@ -196,7 +199,7 @@ export async function updateProductAction(productId: string, prevState: any, for
 
 export async function deleteProductAction(productId: string) {
   try {
-    const response = await fetch(`${URI}/api/product`, {
+    const response = await fetch("https://shop-psi-amber-57.vercel.app/api/product", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -229,7 +232,8 @@ export async function addStoreAction(prevState: any, formData: FormData) {
   console.log("New store added (simulated):", newStoreData);
 
   try {
-    const res = await fetch(`${URI}/api/store`, {
+    const res = await fetch(`
+https://shop-psi-amber-57.vercel.app/api/store`, {
       method: "POST",
       headers: {
       "Content-Type": "application/json",
@@ -275,7 +279,8 @@ export async function updateStoreAction(storeId: string, prevState: any, formDat
 
 export async function getStores() {
   try {
-    let res = await fetch(`${URI}/api/store`, {
+    let res = await fetch(`
+https://shop-psi-amber-57.vercel.app/api/store`, {
       method: "GET",
       headers: {
       "Content-Type": "application/json",
@@ -299,7 +304,8 @@ export default async function UserId() {
 
 export async function getProducts() {
     try {
-      let res = await fetch(`${URI}/api/product`, {        method: "GET",
+      let res = await fetch(`
+https://shop-psi-amber-57.vercel.app/api/product`, {        method: "GET",
         headers: {
           "Content-Type": "application/json",
         }})
@@ -312,7 +318,8 @@ export async function getProducts() {
 
   export async function user(userId: String) {
     try {
-      const res = await fetch(`${URI}/api/user/validate`, {
+      const res = await fetch(`
+https://shop-psi-amber-57.vercel.app/api/user/validate`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
