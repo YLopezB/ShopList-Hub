@@ -131,10 +131,6 @@ Ejecutar el proyecto:
 npm run dev
 
 
-Por defecto estará en:
-
-http://localhost:5173
-
 🌐 Objetivo del Proyecto
 
 Desarrollar una aplicación web que permita a los clientes enviar pedidos anticipados a negocios de barrio, mejorando la gestión y la atención al cliente.
