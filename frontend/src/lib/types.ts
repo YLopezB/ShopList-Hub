@@ -9,7 +9,7 @@ export interface User {
 }
 
 export interface Product {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   price: number;
@@ -19,11 +19,11 @@ export interface Product {
 }
 
 export interface Store {
-  id: string;
+  _id: string;
   name: string;
   category: string;
   location: string;
-  imageId: string;
+  imagenURL: string;
   headerImageId: string;
   ownerId: string;
 }

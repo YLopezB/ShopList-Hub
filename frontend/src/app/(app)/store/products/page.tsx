@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -35,15 +35,26 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
-import { deleteProductAction } from "@/lib/actions";
+import { deleteProductAction, getProducts, getStores } from "@/lib/actions";
 import { Input } from "@/components/ui/input";
+import UserId from "@/lib/actions";
 
-const FAKE_OWNER_ID = "user-2";
-const myStores = stores.filter(s => s.ownerId === FAKE_OWNER_ID);
-const myStoreIds = myStores.map(s => s.id);
+const OWNER_ID = await UserId()
+const myStores = stores.filter(s => s.ownerId === OWNER_ID);
+const myStoreIds = myStores.map(s => s._id);
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState(initialProducts.filter(p => myStoreIds.includes(p.storeId)));
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    async function load() {
+      const data = await getProducts();
+      const filtered = data.filter((p) => myStoreIds.includes(p.storeId));
+      setProducts(filtered);
+    }
+
+    load();
+  }, [myStoreIds])
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -66,23 +77,23 @@ export default function ProductsPage() {
   
   const handleDeleteConfirm = async () => {
     if (!selectedProduct) return;
-    let response = await deleteProductAction(selectedProduct.id);
-    setProducts(products.filter((p) => p.id !== selectedProduct.id));
+    let response = await deleteProductAction(selectedProduct._id);
+    setProducts(products.filter((p) => p._id !== selectedProduct._id));
     toast({
-        title:  String(response.title),
-        description: `"${selectedProduct.name}" ${response.message}`,
+        title:  String("response.title"),
+        description: `"${selectedProduct.name}" ${"response.message"}`,
     })
     setIsDeleteDialogOpen(false);
     setSelectedProduct(null);
   };
 
   const handleStockChange = (productId: string, newStock: number) => {
-    setProducts(products.map(p => p.id === productId ? {...p, stock: newStock} : p));
+    setProducts(products.map(p => p._id === productId ? {...p, stock: newStock} : p));
   };
   
   const handleSaveStock = (productId: string) => {
       // Here you would typically call a server action to save the stock change
-      const product = products.find(p => p.id === productId);
+      const product = products.find(p => p._id === productId);
       console.log(`Saving stock for ${product?.name}: ${product?.stock}`);
       toast({
         title: "Inventario Actualizado",
@@ -126,9 +137,9 @@ export default function ProductsPage() {
             </TableHeader>
             <TableBody>
               {products.length > 0 ? products.map((product) => {
-                const store = stores.find(s => s.id === product.storeId);
+                const store = stores.find(s => s._id === product.storeId);
                 return (
-                <TableRow key={product.id}>
+                <TableRow key={product._id}>
                   <TableCell>
                     {product.imageId && <Image src={product.imageId} alt={product.name} width={40} height={40} className="rounded-sm object-cover" />}
                   </TableCell>
@@ -137,14 +148,14 @@ export default function ProductsPage() {
                   <TableCell className="text-right">{formatPrice(product.price)}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2 justify-center">
-                        <Input 
+                        <Input
                             type="number"
                             className="w-20 h-9 text-center"
                             value={product.stock ?? 0}
-                            onChange={(e) => handleStockChange(product.id, parseInt(e.target.value, 10) || 0)}
+                            onChange={(e) => handleStockChange(product._id, parseInt(e.target.value, 10) || 0)}
                             min="0"
                         />
-                        <Button size="icon" variant="ghost" onClick={() => handleSaveStock(product.id)}>
+                        <Button size="icon" variant="ghost" onClick={() => handleSaveStock(product._id)}>
                             <Save className="h-4 w-4" />
                         </Button>
                     </div>

@@ -25,9 +25,10 @@ import type { Product } from "@/lib/types";
 import { useEffect, useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { useToast } from "@/hooks/use-toast";
-import { addProductAction, updateProductAction } from "@/lib/actions";
+import StoresPage, { addProductAction, updateProductAction } from "@/lib/actions";
 import { Loader2 } from "lucide-react";
 import { stores as allStores } from "@/lib/data";
+
 
 interface ProductFormProps {
   isOpen: boolean;
@@ -39,8 +40,8 @@ const initialState = {
     message: "",
 }
 
-const FAKE_OWNER_ID = "user-2";
-const myStores = allStores.filter(s => s.ownerId === FAKE_OWNER_ID);
+const OWNER_ID = await StoresPage()
+const myStores = allStores.filter(s => s.ownerId === OWNER_ID);
 
 function SubmitButton() {
     const { pending } = useFormStatus();
@@ -58,27 +59,26 @@ export function ProductForm({
   product,
 }: ProductFormProps) {
     const { toast } = useToast();
-    
-    const actionToUse = product ? updateProductAction.bind(null, product.id) : addProductAction;
+    const actionToUse = product ? updateProductAction.bind(null, product._id) : addProductAction;
     const [state, formAction] = useActionState(actionToUse, initialState);
 
-    useEffect(() => {
-        if(state?.message === "success") {
-            toast({
-                title: `Producto ${product ? 'Actualizado' : 'Agregado'}`,
-                description: `El producto ha sido ${product ? 'actualizado' : 'agregado'} exitosamente.`
-            });
-            setIsOpen(false);
-            // In a real app, you would refetch the products list here.
-            window.location.reload();
-        } else if (state?.message) {
-             toast({
-                variant: "destructive",
-                title: `Error al ${product ? 'actualizar' : 'agregar'} el producto`,
-                description: state.message,
-            });
-        }
-    }, [state, product, setIsOpen, toast]);
+useEffect(() => {
+    if (state?.message === "success") {
+        toast({
+            title: `Producto ${product ? 'Actualizado' : 'Agregado'}`,
+            description: `El producto ha sido ${product ? 'actualizado' : 'agregado'} exitosamente.`
+        });
+
+        setIsOpen(false);
+        window.location.reload();
+    } else if (state?.message) {
+        toast({
+            variant: "destructive",
+            title: `Error al ${product ? 'actualizar' : 'agregar'} el producto`,
+            description: state.message,
+        });
+    }
+}, [state, product, setIsOpen, toast]);
 
 
   return (
@@ -104,7 +104,7 @@ export function ProductForm({
                   </SelectTrigger>
                   <SelectContent>
                       {myStores.map(store => (
-                          <SelectItem key={store.id} value={store.id}>
+                          <SelectItem key={store._id} value={store._id}>
                               {store.name}
                           </SelectItem>
                       ))}

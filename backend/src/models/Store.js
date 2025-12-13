@@ -6,7 +6,7 @@ let schema = Schema(
     name: { type: String, require: true },
     category: { type: String, require: true },
     location: { type: String, require: true },
-    imageId: { type: String, require: false },
+    imagenURL: { type: String, require: false },
     headerImageId: { type: String, require: false },
     ownerId: { type: Schema.Types.ObjectId, ref: "users", require: true },
   },

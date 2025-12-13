@@ -9,12 +9,12 @@ import React from "react";
 
 export default function StorePage({ params }: { params: { id: string } }) {
   const resolvedParams = React.use(params);
-  const store = stores.find((s) => s.id === resolvedParams.id);
+  const store = stores.find((s) => s._id === resolvedParams.id);
   if (!store) {
     notFound();
   }
 
-  const products = allProducts.filter((p) => p.storeId === store.id);
+  const products = allProducts.filter((p) => p.storeId === store._id);
   const headerImage = PlaceHolderImages.find(
     (p) => p.id === store.headerImageId
   );

@@ -9,14 +9,15 @@ import Link from "next/link";
 import { useState } from "react";
 import { StoreForm } from "@/components/store/store-form";
 import type { Store } from "@/lib/types";
+import UserId from "@/lib/actions";
 
 // This is a client component, so we can't use cookies().get() directly.
 // For the purpose of this demo, we'll hardcode the ownerId.
-const FAKE_OWNER_ID = "user-2";
+const OWNER_ID = await UserId();
 
 export default function StoreDashboardPage() {
-    const [stores, setStores] = useState(initialStores.filter(s => s.ownerId === FAKE_OWNER_ID));
-    const myProducts = products.filter(p => stores.some(s => s.id === p.storeId));
+    const [stores, setStores] = useState(initialStores.filter(s => s.ownerId === OWNER_ID));
+    const myProducts = products.filter(p => stores.some(s => s._id === p.storeId));
     const [isStoreFormOpen, setIsStoreFormOpen] = useState(false);
     const [selectedStore, setSelectedStore] = useState<Store | null>(null);
 
@@ -25,16 +26,16 @@ export default function StoreDashboardPage() {
     const handleAddStoreSuccess = (newStoreData: Omit<Store, 'id' | 'imageId' | 'headerImageId' | 'ownerId'>) => {
         const fullNewStore: Store = {
             ...newStoreData,
-            id: `store-${Date.now()}`,
-            ownerId: FAKE_OWNER_ID,
-            imageId: `store-${Math.floor(Math.random() * 4) + 1}`,
+            _id: `store-${Date.now()}`,
+            ownerId: OWNER_ID,
+            imagenURL: `store-${Math.floor(Math.random() * 4) + 1}`,
             headerImageId: `store-header-${Math.floor(Math.random() * 4) + 1}`,
         };
         setStores(prev => [...prev, fullNewStore]);
     }
 
     const handleEditStoreSuccess = (updatedStore: Store) => {
-        setStores(prev => prev.map(s => s.id === updatedStore.id ? updatedStore : s));
+        setStores(prev => prev.map(s => s._id === updatedStore._id ? updatedStore : s));
     }
 
     const handleAddClick = () => {
@@ -112,7 +113,7 @@ export default function StoreDashboardPage() {
           <h2 className="text-2xl font-bold mb-4 font-headline">Tus Tiendas</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {stores.map(store => (
-                  <Card key={store.id}>
+                  <Card key={store._id}>
                       <CardHeader className="flex flex-row items-start justify-between">
                           <div>
                               <CardTitle className="font-headline">{store.name}</CardTitle>
@@ -124,7 +125,7 @@ export default function StoreDashboardPage() {
                       </CardHeader>
                       <CardContent>
                           <p>Categoría: {store.category}</p>
-                          <p>Productos: {products.filter(p => p.storeId === store.id).length}</p>
+                          <p>Productos: {products.filter(p => p.storeId === store._id).length}</p>
                       </CardContent>
                   </Card>
               ))}
@@ -134,7 +135,7 @@ export default function StoreDashboardPage() {
           </div>
         </div>
       </div>
-      <StoreForm 
+      <StoreForm
         isOpen={isStoreFormOpen}
         setIsOpen={setIsStoreFormOpen}
         onAddSuccess={handleAddStoreSuccess}

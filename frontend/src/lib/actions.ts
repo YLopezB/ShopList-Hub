@@ -11,8 +11,6 @@ export async function login(prevState: any, formData: FormData) {
   const password = formData.get("password") as string;
   const role = formData.get("role") as string;
 
-  await new Promise((resolve) => setTimeout(resolve, 500));
-
   let user = null;
 
   try {
@@ -23,14 +21,13 @@ export async function login(prevState: any, formData: FormData) {
       },
       body: JSON.stringify({ email, password, role }),
     });
-
     user = await res.json();
   } catch (error) {
     console.error("Error al iniciar sesión:", error);
   }
 
   if (user?.id) {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
 
     cookieStore.set("user_id", user.id, {
       httpOnly: true,
@@ -45,7 +42,6 @@ export async function login(prevState: any, formData: FormData) {
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
     });
-
     return { success: true, role: user.role };
   }
 
@@ -56,8 +52,10 @@ export async function login(prevState: any, formData: FormData) {
 }
 
 export async function logout() {
-  cookies().delete("user_id");
-  cookies().delete("user_role");
+  const cookieStore = await cookies();
+  cookieStore.delete("user_id");
+  cookieStore.delete("user_role");
+
   redirect("/login");
 }
 
@@ -94,19 +92,21 @@ try {
   });
   const data = await response.json();
 
-  cookies().set("user_id", data.id, {
+  const cookieStore = await cookies();
+
+  cookieStore.set("user_id", data.id, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     maxAge: 60 * 60 * 24 * 7,
     path: "/",
   });
-    cookies().set("user_role", newUser.role, {
+    cookieStore.set("user_role", newUser.role, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     maxAge: 60 * 60 * 24 * 7,
     path: "/",
   });
-  
+
   console.log("Respuesta del servidor:", data);
 } catch (error) {
   console.error("Error al enviar usuario:", error);
@@ -141,9 +141,21 @@ export async function addProductAction(prevState: any, formData: FormData) {
       stock: 0,
   }
 
-  products.push(newProduct);
+  try {
+    let res = await fetch("http://localhost:8080/api/product", {
+      method: "POST",
+      headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newProduct),
+    })
+    const data = await res.json()
+    return data.response
+  } catch (error) {
+    console.log(error)
+  }
   console.log("New product added (simulated):", newProduct);
-  
+
   return { message: "success" };
 }
 
@@ -159,7 +171,7 @@ export async function updateProductAction(productId: string, prevState: any, for
       return { message: "Todos los campos son obligatorios." };
     }
 
-    const productIndex = products.findIndex(p => p.id === productId);
+    const productIndex = products.findIndex(p => p._id === productId);
 
     if(productIndex === -1) {
         return { message: "Producto no encontrado." };
@@ -194,7 +206,7 @@ export async function deleteProductAction(productId: string) {
       console.log(error)
     }
     console.log(`Product ${productId} deleted (simulated).`);
-    const index = products.findIndex(p => p.id === productId);
+    const index = products.findIndex(p => p._id === productId);
     if (index !== -1) {
         products.splice(index, 1);
     }
@@ -205,17 +217,30 @@ export async function addStoreAction(prevState: any, formData: FormData) {
   const name = formData.get("name") as string;
   const category = formData.get("category") as string;
   const location = formData.get("location") as string;
-  const userId = cookies().get("user_id")?.value
+  const imagenURL = formData.get("imagenURL") as string;
+  const ownerId = await UserId()
 
   if (!name || !category || !location) {
     return { message: "Todos los campos son obligatorios.", error: true, timestamp: Date.now() };
   }
-  
-  const newStoreData = { name, category, location, userId };
+  const newStoreData = { name, category, location, ownerId, imagenURL };
 
   console.log("New store added (simulated):", newStoreData);
+
+  try {
+    const res = await fetch("http://localhost:8080/api/store", {
+      method: "POST",
+      headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newStoreData),
+    })
+    const data = await res.json()
+    return { message: "success", store: data.response, timestamp: data.response.createdAt };
+  } catch (error) {
+    console.error(error)
+  }
   // In a real app, you'd save this to a DB and get a full store object back
-  return { message: "success", store: newStoreData, timestamp: Date.now() };
 }
 
 export async function updateStoreAction(storeId: string, prevState: any, formData: FormData) {
@@ -228,7 +253,7 @@ export async function updateStoreAction(storeId: string, prevState: any, formDat
     return { message: "Todos los campos son obligatorios.", error: true, timestamp: Date.now() };
   }
 
-  const storeIndex = stores.findIndex(s => s.id === storeId);
+  const storeIndex = stores.findIndex(s => s._id === storeId);
   if (storeIndex === -1) {
     return { message: "Tienda no encontrada.", error: true, timestamp: Date.now() };
   }
@@ -246,3 +271,57 @@ export async function updateStoreAction(storeId: string, prevState: any, formDat
 
   return { message: "success", store: updatedStore, timestamp: Date.now() };
 }
+
+export async function getStores() {
+  try {
+    let res = await fetch("http://localhost:8080/api/store", {
+      method: "GET",
+      headers: {
+      "Content-Type": "application/json",
+      }})
+    const data = await res.json();
+    return data.response
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export default async function UserId() {
+  try {
+  const cookieStore = await cookies();
+  const OWNER_ID = cookieStore.get("user_id")?.value;
+  return OWNER_ID;
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export async function getProducts() {
+    try {
+      let res = await fetch("http://localhost:8080/api/product", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }})
+        const data = await res.json()
+        return data.response
+    } catch (error) {
+      console.error(error)
+    }
+}
+
+  export async function user(userId: String) {
+    try {
+      const res = await fetch("http://localhost:8080/api/user/validate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({id: userId}),
+  });
+  const data = await res.json();
+  return data
+    } catch (error) {
+  console.error("Error al enviar usuario:", error);
+    }
+  }

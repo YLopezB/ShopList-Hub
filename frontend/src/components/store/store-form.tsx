@@ -54,7 +54,7 @@ export function StoreForm({
     const lastStateTimestamp = useRef<number | undefined>(undefined);
     
     const isEditing = !!store;
-    const actionToUse = isEditing ? updateStoreAction.bind(null, store!.id) : addStoreAction;
+    const actionToUse = isEditing ? updateStoreAction.bind(null, store!._id) : addStoreAction;
     const [state, formAction] = useActionState(actionToUse, initialState);
 
     useEffect(() => {
@@ -93,7 +93,7 @@ export function StoreForm({
           <DialogHeader>
             <DialogTitle>{isEditing ? "Editar Tienda" : "Agregar Nueva Tienda"}</DialogTitle>
             <DialogDescription>
-              {isEditing 
+              {isEditing
                 ? "Actualiza los detalles de tu tienda."
                 : "Completa los detalles para registrar una nueva tienda."
               }
@@ -135,6 +135,19 @@ export function StoreForm({
                 name="location"
                 defaultValue={store?.location}
                 placeholder="123 Calle Falsa, Ciudad"
+                className="col-span-3"
+                required
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="imagenURL" className="text-right">
+                Imagen URL
+              </Label>
+              <Input
+                id="imagenURL"
+                name="imagenURL"
+                defaultValue={store?.imagenURL}
+                placeholder="https://myimage.jpg"
                 className="col-span-3"
                 required
               />

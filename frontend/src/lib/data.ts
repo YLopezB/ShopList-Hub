@@ -1,4 +1,5 @@
 import type { User, Store, Product } from "./types";
+import { getProducts, getStores } from "./actions";
 
 export const users: User[] = [
   {
@@ -17,44 +18,7 @@ export const users: User[] = [
   },
 ];
 
-export const stores: Store[] = [
-  {
-    id: "store-1",
-    name: "Mercado Fresco",
-    category: "Abarrotes",
-    location: "Calle 123, Bogotá",
-    imageId: "store-1",
-    headerImageId: "store-header-1",
-    ownerId: "user-2",
-  },
-  {
-    id: "store-2",
-    name: "Raíces Orgánicas",
-    category: "Orgánico",
-    location: "Avenida 45, Medellín",
-    imageId: "store-2",
-    headerImageId: "store-header-2",
-    ownerId: "user-3", // Belongs to a different owner for demo purposes
-  },
-  {
-    id: "store-3",
-    name: "Super Ahorro",
-    category: "Supermercado",
-    location: "Carrera 7, Cali",
-    imageId: "store-3",
-    headerImageId: "store-header-3",
-    ownerId: "user-4",
-  },
-  {
-    id: "store-4",
-    name: "El Rincón Gourmet",
-    category: "Gourmet",
-    location: "Diagonal 10, Barranquilla",
-    imageId: "store-4",
-    headerImageId: "store-header-4",
-    ownerId: "user-2",
-  },
-];
+export const stores: Store[] = await getStores()
 
 const getProductImage = (id: string): string => {
   const image = PlaceHolderImages.find(p => p.id === id);
@@ -64,10 +28,10 @@ const getProductImage = (id: string): string => {
 // Import placeholder images to find URLs. In a real app, these would come from a CMS or DB.
 import { PlaceHolderImages } from "./placeholder-images";
 
-export const products: Product[] = [
+export const products: Product[] = await getProducts()/*[
   // Products for Mercado Fresco (store-1)
   {
-    id: "prod-1",
+    _id: "prod-1",
     storeId: "store-1",
     name: "Manzanas Orgánicas",
     description: "Manzanas Gala orgánicas, frescas y jugosas (Libra).",
@@ -76,7 +40,7 @@ export const products: Product[] = [
     stock: 50,
   },
   {
-    id: "prod-2",
+    _id: "prod-2",
     storeId: "store-1",
     name: "Pan Integral Artesanal",
     description: "Hogaza de pan integral recién horneada.",
@@ -85,7 +49,7 @@ export const products: Product[] = [
     stock: 30,
   },
   {
-    id: "prod-3",
+    _id: "prod-3",
     storeId: "store-1",
     name: "Leche Orgánica",
     description: "1 litro de leche entera orgánica fresca.",
@@ -94,7 +58,7 @@ export const products: Product[] = [
     stock: 20,
   },
   {
-    id: "prod-4",
+    _id: "prod-4",
     storeId: "store-1",
     name: "Huevos Campesinos",
     description: "Docena de huevos grandes de gallinas criadas en libertad.",
@@ -104,7 +68,7 @@ export const products: Product[] = [
   },
   // Products for Raíces Orgánicas (store-2)
   {
-    id: "prod-5",
+    _id: "prod-5",
     storeId: "store-2",
     name: "Queso Paipa",
     description: "Queso madurado artesanal con un sabor intenso.",
@@ -113,7 +77,7 @@ export const products: Product[] = [
     stock: 15,
   },
   {
-    id: "prod-6",
+    _id: "prod-6",
     storeId: "store-2",
     name: "Pechuga de Pollo Orgánico",
     description: "Pechugas de pollo orgánico sin piel y sin hueso (Libra).",
@@ -123,7 +87,7 @@ export const products: Product[] = [
   },
   // Products for Super Ahorro (store-3)
   {
-    id: "prod-7",
+    _id: "prod-7",
     storeId: "store-3",
     name: "Lechuga Romana",
     description: "Una cabeza fresca de lechuga romana.",
@@ -132,7 +96,7 @@ export const products: Product[] = [
     stock: 60,
   },
   {
-    id: "prod-8",
+    _id: "prod-8",
     storeId: "store-3",
     name: "Tomates Chonto",
     description: "Tomates dulces y jugosos, vendidos por libra.",
@@ -140,4 +104,4 @@ export const products: Product[] = [
     imageId: getProductImage("product-tomatoes"),
     stock: 70,
   },
-];
+];*/

@@ -11,18 +11,18 @@ export default function CustomerDashboard() {
       <h1 className="text-3xl font-bold mb-6 font-headline">Tiendas Disponibles</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {stores.map((store) => {
-          const image = PlaceHolderImages.find((p) => p.id === store.imageId);
+          const id = store._id
           return (
-            <Link key={store.id} href={`/stores/${store.id}`} className="group">
+            <Link key={id} href={`/stores/${id}`} className="group">
               <Card className="overflow-hidden h-full flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                {image && (
+                {store.imagenURL && (
                   <div className="relative w-full h-40">
                     <Image
-                      src={image.imageUrl}
+                      src={store.imagenURL}
                       alt={store.name}
                       fill
                       className="object-cover"
-                      data-ai-hint={image.imageHint}
+                      data-ai-hint={store.imagenURL}
                     />
                   </div>
                 )}

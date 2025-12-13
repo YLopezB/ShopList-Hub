@@ -18,6 +18,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingListBadge } from "./_components/shopping-list-badge";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
+import { user } from "@/lib/actions";
 
 const customerNav = [
   {
@@ -47,40 +48,24 @@ const storeNav = [
 ];
 
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
-  const userId = cookies().get("user_id")?.value;
-  
+export default async function AppLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = await cookies();
+  const userId = cookieStore.get("user_id")?.value;
+
   if (!userId) {
     redirect('/login');
   }
 
-  //const user = users.find((u) => u.id === userId);
-
-  const user = async () => {
-    try {
-      const res = await fetch("http://localhost:8080/api/user/validate", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(userId),
-  });
-  const user = await res.json();
-    } catch (error) {
-  console.error("Error al enviar usuario:", error);
-    }
-  }
-
-
-
+  const user2 = await user(userId)
+    
   if (!user) {
     // This case might happen if the cookie is stale
-    cookies().delete("user_id");
-    cookies().delete("user_role");
+    cookieStore.delete("user_id");
+    cookieStore.delete("user_role");
     redirect('/login');
   }
 
-  const userRole = user.role;
+  const userRole = user2.role
   const navItems = userRole === 'customer' ? customerNav : storeNav;
 
   return (
@@ -113,7 +98,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <SidebarTrigger />
           <div className="flex items-center gap-4">
             <ThemeToggle />
-            <UserNav user={user} />
+            <UserNav user={user2} />
           </div>
         </header>
         <main className="p-4 sm:p-6 lg:p-8">{children}</main>
